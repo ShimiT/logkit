@@ -57,7 +57,7 @@ func Init(format LogFormat) {
 
 	AddDefaultKeyvals(
 		"ts", log.DefaultTimestampUTC,
-		"caller", caller(nominalStackDepth),
+		"file", caller(nominalStackDepth),
 		"function", function(nominalStackDepth),
 	)
 }
