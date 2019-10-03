@@ -1,9 +1,7 @@
 package fctx
 
 // Package reqctx provides functionality for creating context keys unique to a
-// given service. Package reqctx should be initialized by calling Init() at the
-// startup of any service using it. If you find svc_unset in metrics Init() is
-// most likely not being called
+// given service.
 
 import (
 	"context"
@@ -48,8 +46,7 @@ var (
 var serviceNameToSvcKey = map[string]SvcKey{}
 
 // Init initializes the name of the service that will be used when
-// constructing service-specific context keys, which is done to prevent
-// inter-service name collisions for context values.
+// constructing service-specific context keys, which is done to prevent .
 func Init(service string) {
 	if svcKey, ok := serviceNameToSvcKey[service]; ok {
 		once.Do(func() { svc = svcKey })
@@ -70,8 +67,7 @@ var selectedTags = map[string]ReqKey{
 	"endpoint": ReqEndpoint,
 }
 
-// MetricsTagsFromContext extracts pre-defined tags from a context, suitable
-// for passing to the metrics With() tag-defining function.
+// MetricsTagsFromContext extracts pre-defined tags from a context
 func MetricsTagsFromContext(ctx context.Context) []string {
 	tags := make([]string, 0, len(selectedTags)*2)
 	for tagname, tagkey := range selectedTags {
@@ -91,8 +87,7 @@ func MetricsTagsFromContext(ctx context.Context) []string {
 	return tags
 }
 
-// LogTagsFromContext extracts pre-defined tags from a a context, suitable
-// for passing to the logging With() context-defining function.
+// LogTagsFromContext extracts pre-defined tags from a a context
 func LogTagsFromContext(ctx context.Context) []interface{} {
 	tags := MetricsTagsFromContext(ctx)
 	intfTags := make([]interface{}, len(tags))

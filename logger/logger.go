@@ -56,7 +56,7 @@ func Init(format LogFormat) {
 	defaultLevels = levels{l}
 
 	AddDefaultKeyvals(
-		"ts", log.DefaultTimestampUTC,
+		"timestamp", log.DefaultTimestampUTC,
 		"file", caller(nominalStackDepth),
 		"function", function(nominalStackDepth),
 	)
@@ -91,15 +91,11 @@ func Warn() log.Logger {
 	return defaultLevels.Warn()
 }
 
-// Error returns an errror level logger.
+// Error returns an error level logger.
 func Error() log.Logger {
 	return defaultLevels.Error()
 }
 
-// Crit returns an crit level logger.
-func Crit() log.Logger {
-	return defaultLevels.Crit()
-}
 
 // With adds the key value pairs to the Leveler.
 func With(keyvals ...interface{}) Leveler {
@@ -142,8 +138,6 @@ type Leveler interface {
 	Warn() log.Logger
 	// Error returns an error level logger.
 	Error() log.Logger
-	// Crit returns an crit level logger.
-	Crit() log.Logger
 
 	// With adds the key value pairs to the Leveler
 	With(keyval ...interface{}) Leveler
@@ -178,9 +172,6 @@ func (l levels) Warn() log.Logger {
 }
 func (l levels) Error() log.Logger {
 	return level.Error(l.internalLogger)
-}
-func (l levels) Crit() log.Logger {
-	return log.WithPrefix(l.internalLogger, level.Key(), "crit")
 }
 
 func (l levels) With(keyvals ...interface{}) Leveler {
